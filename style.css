@@ -1,0 +1,412 @@
+/* ============ VARIÁVEIS CSS ============ */
+:root {
+  /* Cores */
+  --red-aged: #8B0000;
+  --black-matte: #1a1a1a;
+  --white-pure: #ffffff;
+  --dark-bg: var(--black-matte);
+  --dark-text: var(--white-pure);
+  --dark-card: #2a2a2a;
+  
+  /* Espaçamentos */
+  --section-padding: 4rem 2rem;
+  --container-max-width: 1200px;
+  
+  /* Efeitos */
+  --transition-default: all 0.3s ease;
+  --card-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  --navbar-height: 70px;
+}
+
+/* ============ ESTILOS GERAIS ============ */
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: var(--black-matte);
+  background-color: var(--white-pure);
+  overflow-x: hidden;
+  padding-top: var(--navbar-height);
+}
+
+section {
+  padding: var(--section-padding);
+}
+
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+/* ============ ACESSIBILIDADE ============ */
+[data-theme="dark"] {
+  background-color: var(--dark-bg) !important;
+  color: var(--dark-text) !important;
+}
+
+[data-theme="dark"] .hero-section {
+  background-blend-mode: overlay;
+}
+
+[data-contrast="high"] {
+  --red-aged: #ff0000;
+  --black-matte: #000000;
+  --white-pure: #ffffff;
+}
+
+/* ============ NAVBAR ============ */
+.navbar {
+  background-color: var(--black-matte);
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: var(--transition-default);
+}
+
+.navbar-brand {
+  color: var(--white-pure);
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.nav-link {
+  color: var(--white-pure);
+  margin: 0 1rem;
+  transition: var(--transition-default);
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--red-aged);
+  transition: var(--transition-default);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ============ HERO SECTION ============ */
+.hero-section {
+  position: relative;
+  height: calc(100vh - var(--navbar-height));
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+              url('img/image.jpg') center/cover no-repeat;
+}
+
+.hero-content {
+  text-align: center;
+  color: var(--white-pure);
+  padding: 0 1rem;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: bold;
+  text-transform: uppercase;
+  animation: float 6s ease-in-out infinite;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* ============ SEÇÃO DE CARTAS ============ */
+.cards-section {
+  background: linear-gradient(to bottom, var(--black-matte), var(--red-aged));
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2rem;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.playing-card {
+  position: relative;
+  width: 150px;
+  height: 210px;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.playing-card:hover {
+  transform: rotateY(15deg) scale(1.05);
+}
+
+.playing-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--card-shadow);
+}
+
+.card-back {
+  background: var(--red-aged);
+  border: 8px solid var(--white-pure);
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 10px, 
+    rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px);
+}
+
+.card-front {
+  background: var(--white-pure);
+  transform: rotateY(180deg);
+  border: 8px solid var(--red-aged);
+  font-size: 3.5rem;
+}
+
+.card-hover-text {
+  color: var(--white-pure);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.3s;
+  text-align: center;
+  padding: 0 10px;
+  font-weight: bold;
+}
+
+.playing-card:hover .card-hover-text {
+  opacity: 1;
+}
+
+/* ============ SEÇÃO DO ÁLBUM ============ */
+.album-section {
+  background-color: var(--black-matte);
+  color: var(--white-pure);
+}
+
+.track-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.track-item {
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  transition: var(--transition-default);
+  backdrop-filter: blur(5px);
+}
+
+.track-item:hover {
+  transform: translateX(10px);
+  background: rgba(255,255,255,0.2);
+}
+
+/* ============ SEÇÃO DE VÍDEOS ============ */
+.videos-section {
+  background-color: var(--white-pure);
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  filter: brightness(0.8);
+}
+
+/* ============ SEÇÃO DA LOJA ============ */
+.shop-section {
+  background-color: var(--black-matte);
+  color: var(--white-pure);
+}
+
+.product-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 1.5rem;
+  transition: var(--transition-default);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.product-card img {
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+/* ============ SEÇÃO HISTÓRIA ============ */
+.history-section {
+  background: linear-gradient(to right, var(--black-matte), var(--red-aged));
+  color: var(--white-pure);
+}
+
+.history-gif-container {
+  border: 5px solid var(--red-aged);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+}
+
+.history-text {
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+}
+
+/* ============ FOOTER ============ */
+.footer {
+  background-color: var(--black-matte);
+  color: var(--white-pure);
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.social-link {
+  color: var(--white-pure);
+  font-size: 1.8rem;
+  transition: var(--transition-default);
+  display: inline-block;
+}
+
+.social-link:hover {
+  color: var(--red-aged);
+  transform: translateY(-5px);
+}
+
+/* ============ CONTROLES ACESSIBILIDADE ============ */
+.accessibility-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  gap: 10px;
+}
+
+.accessibility-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background: var(--black-matte);
+  color: var(--white-pure);
+  transition: var(--transition-default);
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.accessibility-btn:hover {
+  transform: scale(1.1);
+  background: var(--red-aged);
+}
+
+/* ============ MODAL ============ */
+.modal-content {
+  background-color: var(--white-pure);
+  border-radius: 15px;
+  overflow: hidden;
+  border: none;
+}
+
+.modal-header {
+  background-color: var(--red-aged);
+  color: var(--white-pure);
+  border-bottom: none;
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+/* ============ MEDIA QUERIES ============ */
+@media (max-width: 992px) {
+  .cards-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --navbar-height: 60px;
+    --section-padding: 3rem 1.5rem;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .history-section .row {
+    flex-direction: column;
+  }
+  
+  .history-gif-container {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .cards-container {
+    grid-template-columns: 1fr;
+    max-width: 300px;
+  }
+  
+  .accessibility-controls {
+    flex-direction: column;
+    bottom: 70px;
+  }
+  
+  .playing-card {
+    width: 130px;
+    height: 180px;
+  }
+}
